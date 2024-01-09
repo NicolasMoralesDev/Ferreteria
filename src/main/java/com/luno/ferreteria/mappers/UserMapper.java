@@ -1,0 +1,28 @@
+package com.luno.ferreteria.mappers;
+
+import com.luno.ferreteria.dto.UserDTO;
+import com.luno.ferreteria.entity.User;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class UserMapper {
+
+    public UserDTO userToUserDto(User user){
+        UserDTO userDto = new UserDTO();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
+    public List<UserDTO> listUserToListUserDto(List<User> listUser){
+        List<UserDTO> listUserDto = new ArrayList<>();
+        for(User u : listUser){
+            listUserDto.add(this.userToUserDto(u));
+        }
+        return listUserDto;
+    }
+}
