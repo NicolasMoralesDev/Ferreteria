@@ -3,7 +3,6 @@ package com.luno.ferreteria.config;
 
 import com.luno.ferreteria.dao.IUserDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,6 +1,5 @@
 package com.luno.ferreteria.dto;
 
-import com.luno.ferreteria.entity.Category;
 import com.luno.ferreteria.entity.SubCategory;
 import lombok.Data;
 
