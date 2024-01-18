@@ -64,7 +64,7 @@ public class SaleMapper {
         for (Item item : saleDto.getItemList()) {
                 Item i = new Item();
                 i.setSale(sale);
-                i.setProduct(productDao.findById(item.getProduct().getId()).get());
+                i.setProduct(productDao.findById(item.getProduct().getIdProduct()).get());
                 i.setAmount(item.getAmount());
                 sale.getItemList().add(i);
         }

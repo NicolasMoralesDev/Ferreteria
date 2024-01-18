@@ -1,6 +1,7 @@
 package com.luno.ferreteria.controller;
 
 import com.luno.ferreteria.entity.Category;
+
 import com.luno.ferreteria.entity.SubCategory;
 import com.luno.ferreteria.service.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,10 +38,10 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "Enpoint de acesso privado para administradores, crea una categoria")
+    @Operation(summary = "Enpoint de acesso privado para administradores, crea una Sub categoria")
     @PostMapping("/admin/create/subcategory")
     public ResponseEntity<?> createSubCategory(@RequestBody SubCategory nueva){
-        System.out.println(nueva);
+
         try {
 
 

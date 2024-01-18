@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface IProductDao extends JpaRepository<Product, Integer> {
 
-    @Query("SELECT p FROM Product  p WHERE p.category = :category AND p.status = 'on' AND p.stock > 0")
+    @Query("SELECT p FROM Product  p WHERE  p.status = 'on' AND p.stock > 0")
     Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:search% AND p.status = 'on' AND p.stock > 0")

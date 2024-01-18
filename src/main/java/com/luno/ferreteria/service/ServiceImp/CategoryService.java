@@ -26,13 +26,15 @@ public class CategoryService implements ICategoryService {
 
         try {
 
-            Category nueva = Category.builder().title(categoria.getTitle()).build();
+
+            Category nueva = new Category();
+            nueva.setTitle(categoria.getTitle());
             nueva.setTitle("epico");
-            cateDao.save(nueva);
+            cateDao.save(categoria);
             return "Categoria Creada con Exito!!";
         } catch (Exception e){
 
-            return "Error" + e;
+            return "Error " + e;
         }
     }
 
@@ -62,7 +64,7 @@ public class CategoryService implements ICategoryService {
 
         } catch (Exception e){
 
-            return "Error"+e;
+            return "Error "+e;
         }
     }
 }

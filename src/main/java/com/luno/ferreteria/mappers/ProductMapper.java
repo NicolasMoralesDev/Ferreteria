@@ -18,21 +18,22 @@ public class ProductMapper {
         product.setDescription(productDto.getDescription());
         product.setStock(productDto.getStock());
         product.setPrice(productDto.getPrice());
-        product.setCategory(productDto.getCategory());
+        product.setSubCategory(productDto.getSubCategory());
         product.setBrand(productDto.getBrand());
         product.setImageUrl(productDto.getImageUrl());
         return product;
     }
 
     public ProductDTO productToProductDto(Product product) {
+
         System.out.println("productStock from DB = " + product.getStock());
         ProductDTO productDto = new ProductDTO();
-        productDto.setId(product.getId());
+        productDto.setId(product.getIdProduct());
         productDto.setName(product.getName());
         productDto.setStock(product.getStock());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
-        productDto.setCategory(product.getCategory());
+        productDto.setSubCategory(product.getSubCategory());
         productDto.setBrand(product.getBrand());
         productDto.setImageUrl(product.getImageUrl());
         System.out.println("productDto = " + productDto.getStock());

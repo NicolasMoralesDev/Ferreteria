@@ -110,7 +110,7 @@ public class ProductController {
     @PostMapping("/admin/products")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDto) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productDto));
+           return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productDto));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

@@ -27,6 +27,8 @@ public class ProductServiceImp implements ProductService {
     public ProductDTO addProduct(ProductDTO productDto) {
         try {
             Product product = productMapper.productDtoToProduct(productDto);
+
+
             return productMapper.productToProductDto(productDao.save(product));
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +121,7 @@ public class ProductServiceImp implements ProductService {
 
             // Guardar el producto actualizado
             Product product = productMapper.productDtoToProduct(updatedProductDto);
-            product.setId(updatedProductDto.getId());
+            product.setIdProduct(updatedProductDto.getId());
             Product prod = productDao.save(product);
             System.out.println("prod = " + prod);
             return productMapper.productToProductDto(prod);
@@ -133,7 +135,7 @@ public class ProductServiceImp implements ProductService {
         existingProduct.setName(updatedProductDto.getName());
         existingProduct.setBrand(updatedProductDto.getBrand());
         existingProduct.setDescription(updatedProductDto.getDescription());
-        existingProduct.setCategory(updatedProductDto.getCategory());
+        existingProduct.setSubCategory(updatedProductDto.getSubCategory());
         existingProduct.setPrice(updatedProductDto.getPrice());
         existingProduct.setImageUrl(updatedProductDto.getImageUrl());
         existingProduct.setStock(updatedProductDto.getStock());

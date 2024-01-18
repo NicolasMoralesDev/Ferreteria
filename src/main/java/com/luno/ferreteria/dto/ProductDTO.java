@@ -1,8 +1,10 @@
 package com.luno.ferreteria.dto;
 
+import com.luno.ferreteria.entity.Category;
+import com.luno.ferreteria.entity.SubCategory;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProductDTO {
@@ -12,9 +14,9 @@ public class ProductDTO {
 
     private String description;
 
-    private BigDecimal price;
+    private int price;
 
-    private String category;
+    private List<SubCategory> subCategory;
 
     private String brand;
 

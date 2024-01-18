@@ -2,6 +2,7 @@ package com.luno.ferreteria.entity;
 
 
 
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
