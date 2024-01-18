@@ -38,27 +38,8 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "Enpoint de acesso privado para administradores, crea una Sub categoria")
-    @PostMapping("/admin/create/subcategory")
-    public ResponseEntity<?> createSubCategory(@RequestBody SubCategory nueva){
-
-        try {
-
-
-            HashMap<String, String> response = new HashMap<>();
-            response.put("msg", cateServ.createSubCategory(nueva) );
-
-            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-
-        } catch (Exception e){
-
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
-        }
-    }
-
-    @Operation(summary = "Enpoint de acesso privado para administradores, trae todas las categorias")
-    @GetMapping("/admin/get/category")
+    @Operation(summary = "Enpoint de acesso publico, trae todas las categorias")
+    @GetMapping("/public/get/category")
     public ResponseEntity<?> getAllCategories(){
 
         try {
@@ -72,13 +53,49 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "Enpoint de acesso privado para administradores, trae  la categoria por id")
-    @GetMapping("/admin/get/category/{id}")
+    @Operation(summary = "Enpoint de acesso public, trae  la categoria por id")
+    @GetMapping("/public/get/category/{id}")
     public ResponseEntity<?> getCategorieById(@PathVariable Long id){
 
         try {
 
             return new ResponseEntity<>(cateServ.getCategorieById(id), HttpStatus.ACCEPTED);
+
+        } catch (Exception e){
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+
+    @Operation(summary = "Enpoint de acesso publico, trae todas las SubCategorias")
+    @GetMapping("/public/get/subCategories")
+    public ResponseEntity<?> getAllSubCategories(){
+
+        try {
+
+            return new ResponseEntity<>(cateServ.getAllSubCategories(), HttpStatus.ACCEPTED);
+
+        } catch (Exception e){
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+
+    @Operation(summary = "Enpoint de acesso privado para administradores, crea una Sub categoria")
+    @PostMapping("/admin/create/subcategory")
+    public ResponseEntity<?> createSubCategory(@RequestBody SubCategory nueva){
+
+        try {
+
+
+            HashMap<String, String> response = new HashMap<>();
+            response.put("msg", cateServ.createSubCategory(nueva) );
+
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
         } catch (Exception e){
 

@@ -54,6 +54,13 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public List<SubCategory> getAllSubCategories() {
+
+
+          return  cateSubDao.findAll();
+    }
+
+    @Override
     public String createSubCategory(SubCategory nueva) {
 
         try{
