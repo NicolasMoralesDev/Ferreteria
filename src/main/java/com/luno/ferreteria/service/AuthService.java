@@ -23,6 +23,9 @@ public interface AuthService {
      * @return AuthenticationResponse, contains the token or an error.
      */
     AuthenticationResponseDTO register(RegisterRequestDTO request);
-    
+
+    AuthenticationResponseDTO registerProfessional(RegisterRequestDTO request);
+
+
     String recover(RecoverDTO request);
 }

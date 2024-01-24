@@ -85,6 +85,32 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    @Override
+    public AuthenticationResponseDTO registerProfessional(RegisterRequestDTO request) {
+
+        // Validate user data
+        validateUser(request);
+
+        // Create user
+        var user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword())) // Encode password
+                .role(Role.ROLE_PRO)
+                .build();
+        userDao.save(user);
+
+        // Generate token with extra claims
+        String jwtToken = generateTokenWithExtraClaims(user);
+
+        // Return the token in a AuthenticationResponse object. This object is converted to JSON and returned to the client.
+        return AuthenticationResponseDTO
+                .builder()
+                .token(jwtToken)
+                .build();
+    }
+
     /**
      * This method validate the user data. If the data is not valid, an
      * exception is thrown.

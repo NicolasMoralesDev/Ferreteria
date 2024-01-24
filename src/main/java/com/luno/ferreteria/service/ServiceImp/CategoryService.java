@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,11 +27,7 @@ public class CategoryService implements ICategoryService {
 
         try {
 
-
-            Category nueva = new Category();
-            nueva.setTitle(categoria.getTitle());
-            nueva.setTitle("epico");
-            cateDao.save(categoria);
+           cateDao.save(categoria);
             return "Categoria Creada con Exito!!";
         } catch (Exception e){
 

@@ -9,22 +9,26 @@ import java.util.List;
 
 public interface ProductService {
 
-    public ProductDTO addProduct(ProductDTO productDto);
+     ProductDTO addProduct(ProductDTO productDto);
 
-    public ProductPaginationDTO getAllProducts(int page);
+     ProductPaginationDTO getAllProducts(int page);
     
-    public ProductPaginationDTO getProductByQuery(String q, int page);
+     ProductPaginationDTO getProductByQuery(String q, int page);
 
-    public ProductDTO findById(int id);
+     ProductPaginationDTO getProductsBySubCategory(int category, int page);
+     ProductDTO findById(int id);
 
-    public ProductPaginationDTO findByCategory(String category, int page);
+     ProductPaginationDTO findByCategory(String category, int page);
 
-    public void softDeleteProductById(int id);
+     void softDeleteProductById(int id);
 
-    public void setStockById(int id,int stock);
-    public void setActiveProductById(int id);
+     void setStockById(int id,int stock);
+     void setActiveProductById(int id);
 
-    public void addBulkProducts(List<ProductDTO> products);
+     void addBulkProducts(List<ProductDTO> products);
 
     ProductDTO updateProduct(ProductDTO updatedProductDto);
+
+
+     String updatePriceProductByBrand(int nuevoPrecio, String brand);
 }

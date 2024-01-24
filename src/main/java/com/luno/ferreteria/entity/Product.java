@@ -30,13 +30,23 @@ public class Product  {
     private int price;
 
     private String brand;
+    
+    private String medida;
 
     private int stock;
     @Column(name = "img_Url")
     private String imageUrl;
     private String status;
-    @ManyToMany
-    private List<SubCategory> subCategory;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category categoria;
+//    @ManyToMany
+//    @JoinTable(name = "product",
+//            joinColumns = @JoinColumn(name = "idProduct"),
+//            inverseJoinColumns = @JoinColumn(name = "idSubCategory")
+//    )
+//    private List<SubCategory> subCategory;
 
     public Product() {
         this.status = "on";

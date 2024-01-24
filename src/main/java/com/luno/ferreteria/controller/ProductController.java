@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -53,6 +54,19 @@ public class ProductController {
     public ResponseEntity<?> getAllProduct(@RequestParam int page) {
         try {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getAllProducts(page));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        }
+    }
+
+    @Operation(summary = "Endpoint publico, Traer Todos los Productos por SubCategoria")
+    @GetMapping("/public/products/subCategory")
+    public ResponseEntity<?> getAllProductsBySubCategory(@RequestParam int page, @RequestParam int category) {
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getProductsBySubCategory(category, page));
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -140,6 +154,20 @@ public class ProductController {
         } catch (ProductNotFoundException e) {
             // Manejar el caso donde no se encuentra el producto
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @Operation(summary = "Endpoint solo accesible con rol de Admin, actualizar los precios por marca")
+    @PutMapping("/admin/product/update/bybrand")
+    public ResponseEntity<?> updateProductPriceByBrand( @RequestParam int nuevoPrecio, @RequestParam String brand) {
+
+        try {
+            HashMap<String, String> response = new HashMap<>();
+            response.put("msg", productService.updatePriceProductByBrand(nuevoPrecio, brand) );
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

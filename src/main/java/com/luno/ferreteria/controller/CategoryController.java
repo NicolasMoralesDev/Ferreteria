@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     @Autowired
@@ -22,7 +23,7 @@ public class CategoryController {
     @Operation(summary = "Enpoint de acesso privado para administradores, crea una categoria")
     @PostMapping("/admin/create/category")
     public ResponseEntity<?> createCategory(@RequestBody Category nueva){
-        System.out.println(nueva);
+
         try {
 
 
@@ -40,7 +41,7 @@ public class CategoryController {
 
     @Operation(summary = "Enpoint de acesso publico, trae todas las categorias")
     @GetMapping("/public/get/category")
-    public ResponseEntity<?> getAllCategories(){
+    public ResponseEntity<?> getAllCategory(){
 
         try {
 
@@ -55,7 +56,7 @@ public class CategoryController {
 
     @Operation(summary = "Enpoint de acesso public, trae  la categoria por id")
     @GetMapping("/public/get/category/{id}")
-    public ResponseEntity<?> getCategorieById(@PathVariable Long id){
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id){
 
         try {
 
@@ -90,7 +91,6 @@ public class CategoryController {
     public ResponseEntity<?> createSubCategory(@RequestBody SubCategory nueva){
 
         try {
-
 
             HashMap<String, String> response = new HashMap<>();
             response.put("msg", cateServ.createSubCategory(nueva) );

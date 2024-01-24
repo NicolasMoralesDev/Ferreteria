@@ -7,6 +7,7 @@ package com.luno.ferreteria.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 
 
 /**
@@ -23,7 +24,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCategory;
     private String title;
-
+    @ManyToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    private List<SubCategory> subCategory;
 
     public Category(int idCategory, String title) {
         this.idCategory = idCategory;

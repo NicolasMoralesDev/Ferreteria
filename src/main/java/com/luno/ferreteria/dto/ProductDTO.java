@@ -1,5 +1,6 @@
 package com.luno.ferreteria.dto;
 
+import com.luno.ferreteria.entity.Category;
 import com.luno.ferreteria.entity.SubCategory;
 import lombok.Data;
 
@@ -15,11 +16,14 @@ public class ProductDTO {
 
     private int price;
 
-    private List<SubCategory> subCategory;
+    private Category categoria;
+//    private List<SubCategory> subCategory;
 
     private String brand;
 
     private String imageUrl;
+
+    private String medida;
 
     private int stock;
 

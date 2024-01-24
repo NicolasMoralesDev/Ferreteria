@@ -31,6 +31,14 @@ public class AuthController {
         return ResponseEntity.ok(registerResponse);
     }
 
+    @PostMapping("/register/professional")
+    public ResponseEntity<AuthenticationResponseDTO> registerProfessional(
+            @RequestBody RegisterRequestDTO request
+    ){
+        AuthenticationResponseDTO registerResponse = authService.registerProfessional(request);
+        return ResponseEntity.ok(registerResponse);
+    }
+
     /**
      * Endpoint for login a user in the system.
      * @param request LoginRequest, contains the user data.

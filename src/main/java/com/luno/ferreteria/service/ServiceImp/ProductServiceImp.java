@@ -29,7 +29,7 @@ public class ProductServiceImp implements ProductService {
             Product product = productMapper.productDtoToProduct(productDto);
 
 
-            return productMapper.productToProductDto(productDao.save(product));
+          return productMapper.productToProductDto(productDao.save(product));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -104,13 +104,27 @@ public class ProductServiceImp implements ProductService {
 
         Pageable pageable = PageRequest.of(page, 10);
 
-        //       crea el listado de productos paginable 
+        // crea el listado de productos paginable
         ProductPaginationDTO listProducts = new ProductPaginationDTO();
 
-//        se setean los datos devueltos por la bd y se modela un dto
+        // se setean los datos devueltos por la bd y se modela un dto
         listProducts.setPage(page);
         listProducts.setProductos(productMapper.productListToProductDtoList(productDao.findProductsBySearchQuery(q, pageable).getContent()));
         listProducts.setTotal(productDao.findProductsBySearchQuery(q, pageable).getTotalPages());
+        return listProducts;
+    }
+
+    @Override
+    public ProductPaginationDTO getProductsBySubCategory(int category, int page) {
+
+        Pageable pageable = PageRequest.of(page, 10);
+
+        ProductPaginationDTO listProducts = new ProductPaginationDTO();
+
+        listProducts.setPage(page);
+//        listProducts.setProductos(productMapper.productListToProductDtoList(productDao.findProductsBySubCategory(category, pageable).getContent()));
+//        listProducts.setTotal(productDao.findProductsBySubCategory(category, pageable).getTotalPages());
+
         return listProducts;
     }
 
@@ -128,6 +142,17 @@ public class ProductServiceImp implements ProductService {
 
     }
 
+    @Override
+    public String updatePriceProductByBrand(int nuevoPrecio, String brand) {
+
+        try {
+            productDao.updatePriceProductByBrand( nuevoPrecio, brand);
+            return "Precio Actualizado correctamente!";
+        } catch (Exception e){
+            return "Error "+e;
+        }
+    }
+
     private static Product getProduct(ProductDTO updatedProductDto, Optional<Product> optionalProduct) {
         Product existingProduct = optionalProduct.get();
 
@@ -135,7 +160,7 @@ public class ProductServiceImp implements ProductService {
         existingProduct.setName(updatedProductDto.getName());
         existingProduct.setBrand(updatedProductDto.getBrand());
         existingProduct.setDescription(updatedProductDto.getDescription());
-        existingProduct.setSubCategory(updatedProductDto.getSubCategory());
+        existingProduct.setCategoria(updatedProductDto.getCategoria());
         existingProduct.setPrice(updatedProductDto.getPrice());
         existingProduct.setImageUrl(updatedProductDto.getImageUrl());
         existingProduct.setStock(updatedProductDto.getStock());
