@@ -1,6 +1,8 @@
 package com.luno.ferreteria.controller;
 
 import com.luno.ferreteria.dto.ProductDTO;
+import com.luno.ferreteria.dto.ProductPaginationDTO;
+import com.luno.ferreteria.entity.SubCategory;
 import com.luno.ferreteria.exeptions.ProductNotFoundException;
 import com.luno.ferreteria.mappers.ProductMapper;
 import com.luno.ferreteria.service.ProductService;
@@ -35,6 +37,18 @@ public class ProductController {
         }
     }
 
+    @Operation(summary = "Endpoint de acceso Rol publico, Traer productos por filtros")
+    @GetMapping(value = "/public/products/subCategory", produces = {"application/json"})
+    public ResponseEntity<ProductPaginationDTO> getProductByFilters(@RequestParam int subcategory, @RequestParam int page) {
+        try {
+            System.out.println(page);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findBySubCategory(subcategory, page));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @Operation(summary = "Endpoint publico, Traer Todos los Productos que contengan la query")
     @GetMapping("/public/product")
     public ResponseEntity<?> getProductByQuery(@RequestParam String q, @RequestParam int page) {
@@ -62,36 +76,12 @@ public class ProductController {
         }
     }
 
-    @Operation(summary = "Endpoint publico, Traer Todos los Productos por SubCategoria")
-    @GetMapping("/public/products/subCategory")
-    public ResponseEntity<?> getAllProductsBySubCategory(@RequestParam int page, @RequestParam int category) {
-        try {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getProductsBySubCategory(category, page));
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-        }
-    }
-
     @Operation(summary = "Endpoint para agregar stock a un producto")
     public ResponseEntity<?> setStockById(@RequestBody int id, @PathVariable("stock") int stock){
         try{
             productService.setStockById(id,stock);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-    @Operation(summary = "Endpoint de acceso Rol publico, Busca Productos por id y los filtra por categoria")
-    @GetMapping("/public/products/categories/{category}")
-    public ResponseEntity<?> getProductByCategory(@PathVariable("category") String category,
-            @RequestParam int page) {
-        try {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findByCategory(category, page));
-        } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }

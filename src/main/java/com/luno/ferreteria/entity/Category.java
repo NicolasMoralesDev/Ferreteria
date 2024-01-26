@@ -24,7 +24,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCategory;
     private String title;
-    @ManyToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @ManyToMany( fetch = FetchType.EAGER)
     private List<SubCategory> subCategory;
 
     public Category(int idCategory, String title) {

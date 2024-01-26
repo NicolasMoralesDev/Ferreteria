@@ -14,13 +14,6 @@ public class SubCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSubCategory;
     private String title;
-//   @ManyToMany(mappedBy = "subCategory")
-//    private List<Product> category;
-   @ManyToMany(fetch = FetchType.LAZY)
-   @JoinTable(name = "subCategory_Category",
-        joinColumns = @JoinColumn(name = "idSubCategory"),
-        inverseJoinColumns = @JoinColumn(name = "idCategory")
-   )
-   private List<Category> category;
+
 
 }

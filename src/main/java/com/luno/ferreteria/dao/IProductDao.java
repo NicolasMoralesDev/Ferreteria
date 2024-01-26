@@ -1,6 +1,7 @@
 package com.luno.ferreteria.dao;
 
 import com.luno.ferreteria.entity.Product;
+import com.luno.ferreteria.entity.SubCategory;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
@@ -16,8 +17,6 @@ import java.util.Optional;
 @Repository
 public interface IProductDao extends JpaRepository<Product, Integer> {
 
-    @Query("SELECT p FROM Product  p WHERE  p.status = 'on' AND p.stock > 0")
-    Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:search% AND p.status = 'on' AND p.stock > 0")
     Page<Product> findProductsBySearchQuery(@Param("search") String search, Pageable pageable);
@@ -27,6 +26,9 @@ public interface IProductDao extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p FROM Product p WHERE p.status = 'on' AND p.stock > 0")
     Page<Product> findAllPage(Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.subCategory = :subcategory AND p.stock > 0")
+    Page<Product> findAllbySubCategory(@Param("subcategory") SubCategory subcategory, Pageable pageable);
 
     @Override
     @NonNull

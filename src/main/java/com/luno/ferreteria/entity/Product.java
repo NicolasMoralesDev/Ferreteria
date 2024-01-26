@@ -29,7 +29,8 @@ public class Product  {
 
     private int price;
 
-    private String brand;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Brand brand;
     
     private String medida;
 
@@ -38,15 +39,8 @@ public class Product  {
     private String imageUrl;
     private String status;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
-    private Category categoria;
-//    @ManyToMany
-//    @JoinTable(name = "product",
-//            joinColumns = @JoinColumn(name = "idProduct"),
-//            inverseJoinColumns = @JoinColumn(name = "idSubCategory")
-//    )
-//    private List<SubCategory> subCategory;
+    private SubCategory subCategory;
 
     public Product() {
         this.status = "on";
