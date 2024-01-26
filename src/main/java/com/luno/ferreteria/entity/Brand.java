@@ -1,10 +1,10 @@
 package com.luno.ferreteria.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,6 +14,8 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idBrand;
     private String title;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<SubCategory> subCategory = new ArrayList<>();
 
     public Brand(int idBrand, String title) {
         this.idBrand = idBrand;

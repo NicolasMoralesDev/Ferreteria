@@ -38,6 +38,7 @@ public class SaleServiceImp implements SaleService {
     @Override
     public SaleDTO saveSale(CreateSaleRequestDTO requestDTO){
 
+
         // Find the user in the database.
         User user = userService.findById(requestDTO.getIdUser());
 
@@ -47,8 +48,11 @@ public class SaleServiceImp implements SaleService {
         // Set the user to the sale.
         newSale.setUser(user);
 
+        SaleDTO sale = new SaleDTO();
+
         // Save the sale in the database and return the sale mapped to a SaleDTO.
         return saleMapper.saleToSaleDTO(saleDao.save(newSale));
+
     }
 
     /**

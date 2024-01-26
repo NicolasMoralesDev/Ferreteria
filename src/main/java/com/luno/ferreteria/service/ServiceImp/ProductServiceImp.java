@@ -3,6 +3,7 @@ package com.luno.ferreteria.service.ServiceImp;
 import com.luno.ferreteria.dao.IProductDao;
 import com.luno.ferreteria.dto.ProductDTO;
 import com.luno.ferreteria.dto.ProductPaginationDTO;
+import com.luno.ferreteria.dto.UpdatedProductDto;
 import com.luno.ferreteria.entity.Product;
 import com.luno.ferreteria.entity.SubCategory;
 import com.luno.ferreteria.mappers.ProductMapper;
@@ -169,7 +170,7 @@ public class ProductServiceImp implements ProductService {
         }
     }
 
-    private static Product getProduct(ProductDTO updatedProductDto, Optional<Product> optionalProduct) {
+    private static Product getProduct(UpdatedProductDto updatedProductDto, Optional<Product> optionalProduct) {
         Product existingProduct = optionalProduct.get();
 
         // Actualizar los campos del producto existente con los nuevos datos

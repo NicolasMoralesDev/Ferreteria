@@ -22,7 +22,6 @@ public class CreateSaleRequestDTO {
     private int idUser;
 
     private List<Item> itemList = new ArrayList<>();
-
     private String address;
     @Enumerated(EnumType.STRING)
     private SaleStatus status;

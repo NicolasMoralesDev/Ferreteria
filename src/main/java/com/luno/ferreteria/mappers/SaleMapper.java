@@ -55,7 +55,8 @@ public class SaleMapper {
         return saleDTO;
     }
     public Sale saleRequestDtoToSale(CreateSaleRequestDTO saleDto){
-        
+
+
         Sale sale = new Sale();
         sale.setAddress(saleDto.getAddress());
         sale.setPhone(saleDto.getPhone());

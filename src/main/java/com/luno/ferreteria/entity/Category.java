@@ -7,6 +7,7 @@ package com.luno.ferreteria.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public class Category {
     private int idCategory;
     private String title;
     @ManyToMany( fetch = FetchType.EAGER)
-    private List<SubCategory> subCategory;
+    private List<SubCategory> subCategory = new ArrayList<>();
 
     public Category(int idCategory, String title) {
         this.idCategory = idCategory;
