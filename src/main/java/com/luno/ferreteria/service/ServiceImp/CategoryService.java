@@ -62,9 +62,15 @@ public class CategoryService implements ICategoryService {
 
         try{
 
-            cateSubDao.save(nueva);
+            if (cateSubDao.getByTitle(nueva.getTitle()) == null) {
 
-            return "SubCategoria creada con Exito!!";
+                cateSubDao.save(nueva);
+
+                return "SubCategoria creada con Exito!!";
+            } else {
+                return "La sub categoria, ya existe!";
+            }
+
 
         } catch (Exception e){
 

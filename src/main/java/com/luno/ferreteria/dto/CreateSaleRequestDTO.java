@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateSaleRequestDTO {
 
+    private int id;
     private int idUser;
 
     private List<Item> itemList = new ArrayList<>();

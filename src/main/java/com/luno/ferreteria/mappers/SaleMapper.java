@@ -5,6 +5,7 @@ import com.luno.ferreteria.dto.CreateSaleRequestDTO;
 import com.luno.ferreteria.dto.SaleDTO;
 import com.luno.ferreteria.entity.Item;
 import com.luno.ferreteria.entity.Sale;
+import com.luno.ferreteria.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,7 @@ public class SaleMapper {
 
         // Set the attributes of the SaleDTO
         saleDTO.setId(sale.getId());
+        saleDTO.setIdUser(sale.getUser().getId());
         saleDTO.setAddress(sale.getAddress());
         saleDTO.setPhone(sale.getPhone());
         saleDTO.setStatus(sale.getStatus());
@@ -58,6 +60,7 @@ public class SaleMapper {
 
 
         Sale sale = new Sale();
+        sale.setId(saleDto.getId());
         sale.setAddress(saleDto.getAddress());
         sale.setPhone(saleDto.getPhone());
         sale.setStatus(saleDto.getStatus());

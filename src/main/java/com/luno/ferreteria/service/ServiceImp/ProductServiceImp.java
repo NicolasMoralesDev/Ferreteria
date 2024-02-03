@@ -4,6 +4,7 @@ import com.luno.ferreteria.dao.IProductDao;
 import com.luno.ferreteria.dto.ProductDTO;
 import com.luno.ferreteria.dto.ProductPaginationDTO;
 import com.luno.ferreteria.dto.UpdatedProductDto;
+import com.luno.ferreteria.entity.Brand;
 import com.luno.ferreteria.entity.Product;
 import com.luno.ferreteria.entity.SubCategory;
 import com.luno.ferreteria.mappers.ProductMapper;
@@ -26,15 +27,25 @@ public class ProductServiceImp implements ProductService {
     ProductMapper productMapper;
 
     @Override
-    public ProductDTO addProduct(ProductDTO productDto) {
+    public String addProduct(ProductDTO productDto) {
         try {
+
             Product product = productMapper.productDtoToProduct(productDto);
+            Product productExists = productDao.findByName(product.getName());
 
+            if (productExists == null) {
 
-            return productMapper.productToProductDto(productDao.save(product));
+                productDao.save(product);
+                return "El producto "+ product.getName() + " fue agregado correctamente!";
+
+            } else {
+
+                return "El Producto " + product.getName() +" ya existe en la Base de Datos!!";
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+
+           return "Error "+ e.getMessage();
         }
     }
 
@@ -93,6 +104,34 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
+    public ProductPaginationDTO findByBrand(int brand, int page) {
+
+        Brand nueva = new Brand();
+        nueva.setIdBrand(brand);
+
+        // objeto pagina
+        Pageable pageable = PageRequest.of(page, 10);
+
+        // crea el listado de productos paginable
+        ProductPaginationDTO listProducts = new ProductPaginationDTO();
+
+        // se obtienen los datos de la BD
+        Page<Product> productsPage = productDao.findAllbyBrand(nueva, pageable);
+
+        // se mapean los productos a ProductDTO
+        List<ProductDTO> productDTOs = productMapper.productListToProductDtoList(productsPage.getContent());
+
+        // se setean los datos en el ProductPaginationDTO
+        listProducts.setPage(page);
+        Page<Product> productList = productDao.findAllbyBrand(nueva, pageable);
+        List<ProductDTO> productDtoList = productMapper.productListToProductDtoList(productList.getContent());
+        listProducts.setProductos(productDtoList);
+        listProducts.setTotal(productList.getTotalPages());
+
+        return listProducts;
+    }
+
+    @Override
     public void setStockById(int id, int stock) {
         productDao.setStockById(id, stock);
     }
@@ -133,19 +172,19 @@ public class ProductServiceImp implements ProductService {
         return listProducts;
     }
 
-    @Override
-    public ProductPaginationDTO getProductsBySubCategory(int category, int page) {
-
-        Pageable pageable = PageRequest.of(page, 10);
-
-        ProductPaginationDTO listProducts = new ProductPaginationDTO();
-
-        listProducts.setPage(page);
-//        listProducts.setProductos(productMapper.productListToProductDtoList(productDao.findProductsBySubCategory(category, pageable).getContent()));
-//        listProducts.setTotal(productDao.findProductsBySubCategory(category, pageable).getTotalPages());
-
-        return listProducts;
-    }
+//    @Override
+//    public ProductPaginationDTO getProductsBySubCategory(int category, int page) {
+//
+//        Pageable pageable = PageRequest.of(page, 10);
+//
+//        ProductPaginationDTO listProducts = new ProductPaginationDTO();
+//
+//        listProducts.setPage(page);
+////        listProducts.setProductos(productMapper.productListToProductDtoList(productDao.findProductsBySubCategory(category, pageable).getContent()));
+////        listProducts.setTotal(productDao.findProductsBySubCategory(category, pageable).getTotalPages());
+//
+//        return listProducts;
+//    }
 
     @Override
     public ProductDTO updateProduct(ProductDTO updatedProductDto) {

@@ -5,6 +5,7 @@ import com.luno.ferreteria.dto.CreateSaleRequestDTO;
 import com.luno.ferreteria.dto.SaleDTO;
 import com.luno.ferreteria.dto.SalePaginationDTO;
 import com.luno.ferreteria.dto.UserSalesRequestDTO;
+import com.luno.ferreteria.entity.Sale;
 import com.luno.ferreteria.service.ProductService;
 import com.luno.ferreteria.service.SaleService;
 import com.luno.ferreteria.service.UserService;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
@@ -68,6 +71,21 @@ public class SaleController {
         try {
             SalePaginationDTO paginationDTO = saleService.getAllSales(page);
             return ResponseEntity.ok().body(paginationDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @Operation(summary = "Endpoint para actualizar status venta")
+    @PutMapping("/user/sale/change")
+    public ResponseEntity<?> putStatusSale(@RequestBody CreateSaleRequestDTO sale) {
+
+        try {
+
+            HashMap<String, String> response = new HashMap<>();
+            response.put("msg",  saleService.putStatusSale(sale));
+            return ResponseEntity.ok().body(response);
+
         } catch (Exception e){
             return ResponseEntity.badRequest().build();
         }

@@ -1,5 +1,6 @@
 package com.luno.ferreteria.dao;
 
+import com.luno.ferreteria.entity.Brand;
 import com.luno.ferreteria.entity.Product;
 import com.luno.ferreteria.entity.SubCategory;
 import jakarta.transaction.Transactional;
@@ -27,8 +28,14 @@ public interface IProductDao extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.status = 'on' AND p.stock > 0")
     Page<Product> findAllPage(Pageable pageable);
 
+    @Query("SELECT p FROM Product p WHERE p.name = :name AND p.status = 'on' ")
+    Product findByName(@Param("name") String name);
+
     @Query("SELECT p FROM Product p WHERE p.subCategory = :subcategory AND p.stock > 0")
     Page<Product> findAllbySubCategory(@Param("subcategory") SubCategory subcategory, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.brand = :brand AND p.stock > 0")
+    Page<Product> findAllbyBrand(@Param("brand") Brand brand, Pageable pageable);
 
     @Override
     @NonNull
@@ -53,4 +60,6 @@ public interface IProductDao extends JpaRepository<Product, Integer> {
     @Modifying
     @Query("UPDATE Product p SET p.status = 'on' WHERE p.id = :id")
     void setActiveProductById(@Param("id") int id);
+
+
 }

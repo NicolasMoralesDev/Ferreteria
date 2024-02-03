@@ -28,7 +28,7 @@ public class SecurityConfig {
                         req.requestMatchers("/api/public/**").permitAll() // Permit all requests to /api/public/**
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permit all OPTIONS requests
                                 .requestMatchers("/api/user/**").authenticated() // Permit authenticated requests to /api/user/**
-                                .requestMatchers("/api/admin/**").hasRole("ADMIN") // Permit requests with ADMIN role to /api/admin/**
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")// Permit requests with ADMIN role to /api/admin/**
                                 .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS)) // Disable sessions. JWT is stateless.

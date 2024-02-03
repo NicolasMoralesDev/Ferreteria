@@ -14,12 +14,12 @@ public class ProductDTO {
 
     private String description;
 
-    private int price;
+    private double price;
 
-    private SubCategory subCategory;
+    private String subCategory;
 //    private List<SubCategory> subCategory;
 
-    private Brand brand;
+    private String brand;
 
     private String imageUrl;
 

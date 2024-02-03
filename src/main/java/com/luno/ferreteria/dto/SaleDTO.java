@@ -2,6 +2,7 @@ package com.luno.ferreteria.dto;
 
 import com.luno.ferreteria.entity.Item;
 import com.luno.ferreteria.entity.SaleStatus;
+import com.luno.ferreteria.entity.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class SaleDTO {
 
     private Integer id;
     private List<Item> itemList = new ArrayList<>();
+    private int idUser;
     private String address;
     private String phone;
     @Enumerated(EnumType.STRING)

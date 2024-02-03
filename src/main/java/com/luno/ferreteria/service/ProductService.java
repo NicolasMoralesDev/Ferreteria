@@ -10,15 +10,13 @@ import java.util.List;
 
 public interface ProductService {
 
-     ProductDTO addProduct(ProductDTO productDto);
+     String addProduct(ProductDTO productDto);
 
      ProductPaginationDTO getAllProducts(int page);
 
-     ProductPaginationDTO findBySubCategory(int subCategory, int page);
-
      ProductPaginationDTO getProductByQuery(String q, int page);
 
-     ProductPaginationDTO getProductsBySubCategory(int category, int page);
+
      ProductDTO findById(int id);
 
      void softDeleteProductById(int id);
@@ -32,4 +30,8 @@ public interface ProductService {
 
 
      String updatePriceProductByBrand(int nuevoPrecio, String brand);
+
+     ProductPaginationDTO findBySubCategory(int subcategory, int page);
+
+    ProductPaginationDTO findByBrand(int brand, int page);
 }

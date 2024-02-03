@@ -5,6 +5,7 @@ import com.luno.ferreteria.dto.CreateSaleRequestDTO;
 import com.luno.ferreteria.dto.SaleDTO;
 import com.luno.ferreteria.dto.SalePaginationDTO;
 import com.luno.ferreteria.dto.UserSalesRequestDTO;
+import com.luno.ferreteria.entity.Sale;
 
 public interface SaleService {
 
@@ -34,4 +35,6 @@ public interface SaleService {
      * @return SalePaginationDTO, the sales.
      */
     SalePaginationDTO getAllSales(int page);
+
+    String putStatusSale(CreateSaleRequestDTO requestDTO);
 }

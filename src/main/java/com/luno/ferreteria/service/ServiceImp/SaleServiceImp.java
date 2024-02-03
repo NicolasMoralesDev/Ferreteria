@@ -73,6 +73,7 @@ public class SaleServiceImp implements SaleService {
         // Creating the response.
         SalePaginationDTO salePaginationDTO = new SalePaginationDTO();
 
+
         // Setting the page number.
         salePaginationDTO.setPage(page);
 
@@ -106,6 +107,7 @@ public class SaleServiceImp implements SaleService {
         // Setting the page number.
         salePaginationDTO.setPage(page);
 
+//        salePaginationDTO.setIdUser(saleDao.findAllPage(pageable).get(1).g);
         // Getting the sales paginated.
         Page<Sale> saleList = saleDao.findAllPage(pageable);
 
@@ -117,6 +119,24 @@ public class SaleServiceImp implements SaleService {
 
         // Returning the response.
         return salePaginationDTO;
+    }
+
+    @Override
+    public String putStatusSale(CreateSaleRequestDTO saleRequestDTO) {
+
+        try {
+
+            Sale nueva = saleMapper.saleRequestDtoToSale(saleRequestDTO);
+            User nuevo = new User();
+            nuevo.setId(saleRequestDTO.getIdUser());
+            nueva.setUser(nuevo);
+          saleDao.save(nueva);
+
+            return "Estado Actualizado correctamente!";
+        } catch (Exception e) {
+
+            return "Error " + e.getMessage();
+        }
     }
 
 }

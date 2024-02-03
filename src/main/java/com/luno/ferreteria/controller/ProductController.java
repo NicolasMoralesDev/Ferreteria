@@ -37,12 +37,24 @@ public class ProductController {
         }
     }
 
-    @Operation(summary = "Endpoint de acceso Rol publico, Traer productos por filtros")
+    @Operation(summary = "Endpoint de acceso Rol publico, Traer productos por SubCategory")
     @GetMapping(value = "/public/products/subCategory", produces = {"application/json"})
-    public ResponseEntity<ProductPaginationDTO> getProductByFilters(@RequestParam int subcategory, @RequestParam int page) {
+    public ResponseEntity<ProductPaginationDTO> getProductBySubCategory(@RequestParam int subcategory, @RequestParam int page) {
         try {
-            System.out.println(page);
+
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findBySubCategory(subcategory, page));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @Operation(summary = "Endpoint de acceso Rol publico, Traer productos por Brand")
+    @GetMapping(value = "/public/products/brand", produces = {"application/json"})
+    public ResponseEntity<ProductPaginationDTO> getProductByBrand(@RequestParam int brand, @RequestParam int page) {
+        try {
+
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.findByBrand(brand, page));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -53,7 +65,7 @@ public class ProductController {
     @GetMapping("/public/product")
     public ResponseEntity<?> getProductByQuery(@RequestParam String q, @RequestParam int page) {
         try {
-////
+
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getProductByQuery(q, page));
         } catch (Exception e) {
 
@@ -112,9 +124,13 @@ public class ProductController {
 
     @Operation(summary = "Endpoint solo accesible con rol de Admin, guardar un producto en la base de datos")
     @PostMapping("/admin/products")
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDto) {
+    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDto) {
         try {
-           return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productDto));
+
+            HashMap<String, String> response = new HashMap<>();
+            response.put("msg", productService.addProduct(productDto) );
+
+           return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -138,9 +154,10 @@ public class ProductController {
     public ResponseEntity<ProductDTO> updateProduct( @RequestBody ProductDTO updatedProductDto) {
 
         try {
+
             ProductDTO productDTO = productService.updateProduct(updatedProductDto);
-            System.out.println("productDTO = " + productDTO);
             return ResponseEntity.status(HttpStatus.OK).body(productDTO);
+
         } catch (ProductNotFoundException e) {
             // Manejar el caso donde no se encuentra el producto
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

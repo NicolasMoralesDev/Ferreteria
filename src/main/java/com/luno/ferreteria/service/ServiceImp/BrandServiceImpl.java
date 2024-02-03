@@ -30,7 +30,6 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public List<Brand> getAllBrand() {
-
         return brandDao.findAll();
     }
 

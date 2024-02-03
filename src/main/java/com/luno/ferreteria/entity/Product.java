@@ -27,7 +27,7 @@ public class Product  {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private int price;
+    private double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Brand brand;

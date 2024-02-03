@@ -1,8 +1,11 @@
 package com.luno.ferreteria.mappers;
 
 
+import com.luno.ferreteria.dao.IBrandDao;
+import com.luno.ferreteria.dao.ISubCategoryDao;
 import com.luno.ferreteria.dto.ProductDTO;
 import com.luno.ferreteria.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +15,12 @@ import java.util.List;
 @Component
 public class ProductMapper {
 
+    @Autowired
+    private IBrandDao brandDao;
+
+    @Autowired
+    private ISubCategoryDao subCateDao;
+
     public Product productDtoToProduct(ProductDTO productDto) {
         Product product = new Product();
         product.setName(productDto.getName());
@@ -19,26 +28,24 @@ public class ProductMapper {
         product.setStock(productDto.getStock());
         product.setMedida(productDto.getMedida());
         product.setPrice(productDto.getPrice());
-        product.setSubCategory(productDto.getSubCategory());
-        product.setBrand(productDto.getBrand());
+        product.setSubCategory(subCateDao.getByTitle(productDto.getSubCategory()));
+        product.setBrand(brandDao.getByTitle(productDto.getBrand()));
         product.setImageUrl(productDto.getImageUrl());
         return product;
     }
 
     public ProductDTO productToProductDto(Product product) {
 
-        System.out.println("productStock from DB = " + product.getStock());
         ProductDTO productDto = new ProductDTO();
         productDto.setId(product.getIdProduct());
         productDto.setName(product.getName());
         productDto.setStock(product.getStock());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
-        productDto.setSubCategory(product.getSubCategory());
-        productDto.setBrand(product.getBrand());
+        productDto.setSubCategory( product.getSubCategory().getTitle());
+        productDto.setBrand(product.getBrand().getTitle());
         productDto.setImageUrl(product.getImageUrl());
         productDto.setMedida(product.getMedida());
-        System.out.println("productDto = " + productDto.getStock());
         return productDto;
     }
     public List<ProductDTO> productListToProductDtoList(List<Product> listProduct){
