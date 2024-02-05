@@ -66,7 +66,8 @@ public class CategoryService implements ICategoryService {
 
                 cateSubDao.save(nueva);
 
-                return "SubCategoria creada con Exito!!";
+                return "Sub Categoria creada con Exito!";
+
             } else {
                 return "La sub categoria, ya existe!";
             }

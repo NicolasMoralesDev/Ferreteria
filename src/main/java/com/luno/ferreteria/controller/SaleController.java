@@ -83,8 +83,20 @@ public class SaleController {
         try {
 
             HashMap<String, String> response = new HashMap<>();
-            response.put("msg",  saleService.putStatusSale(sale));
-            return ResponseEntity.ok().body(response);
+
+            String status = saleService.putStatusSale(sale);
+            if (status == "Estado Actualizado correctamente!") {
+
+                response.put("msg",  "Estado Actualizado correctamente!" );
+                return ResponseEntity.ok().body(response);
+
+            } else {
+                response.put("error",  status);
+
+                return ResponseEntity.badRequest().body(response);
+
+            }
+
 
         } catch (Exception e){
             return ResponseEntity.badRequest().build();

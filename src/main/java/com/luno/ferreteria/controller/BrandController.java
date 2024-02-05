@@ -25,9 +25,20 @@ public class BrandController {
         try {
 
             HashMap<String, String> response = new HashMap<>();
-            response.put("msg", brandserv.postBrand(brand));
+            String status = brandserv.postBrand(brand);
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            if (status == "Marca creada con Exitoo!") {
+
+                response.put("msg", "Marca creada con Exitoo!" );
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+            } else {
+
+                response.put("error", status );
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+            }
+
+
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -59,9 +70,21 @@ public class BrandController {
         try {
 
             HashMap<String, String> response = new HashMap<>();
-            response.put("msg", brandserv.deleteById(id));
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            String status = brandserv.deleteById(id);
+
+            if (status == "Marca eliminada con Exito!") {
+
+                response.put("msg", status );
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+
+            } else {
+
+                response.put("error", status );
+
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -19,9 +19,17 @@ public class BrandServiceImpl implements IBrandService {
 
         try {
 
-            brandDao.save(brand);
+            if (brandDao.getByTitle(brand.getTitle()) == null) {
 
-            return "Marca creada con Exitoo!";
+                brandDao.save(brand);
+                return "Marca creada con Exitoo!";
+
+            } else {
+
+                return "La Marca ya Existe!";
+            }
+
+
         } catch (Exception e){
 
             return e.getMessage();

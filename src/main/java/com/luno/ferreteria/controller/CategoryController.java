@@ -93,9 +93,19 @@ public class CategoryController {
         try {
 
             HashMap<String, String> response = new HashMap<>();
-            response.put("msg", cateServ.createSubCategory(nueva) );
+            String status = cateServ.createSubCategory(nueva);
 
-            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+            if (status == "Sub Categoria creada con Exito!") {
+
+                response.put("msg", "Sub Categoria creada con Exito!" );
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+            } else {
+
+                response.put("error", status );
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+            }
+
 
         } catch (Exception e){
 
