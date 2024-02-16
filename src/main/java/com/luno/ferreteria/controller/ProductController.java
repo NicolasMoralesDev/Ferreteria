@@ -2,9 +2,7 @@ package com.luno.ferreteria.controller;
 
 import com.luno.ferreteria.dto.ProductDTO;
 import com.luno.ferreteria.dto.ProductPaginationDTO;
-import com.luno.ferreteria.entity.SubCategory;
 import com.luno.ferreteria.exeptions.ProductNotFoundException;
-import com.luno.ferreteria.mappers.ProductMapper;
 import com.luno.ferreteria.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,7 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
-    @Autowired
-    ProductMapper productMapper;
+
 
     // ----   METODOS PUBLICOS
     @Operation(summary = "Endpoint de acceso Rol publico, Traer producto por Id")
@@ -77,9 +74,9 @@ public class ProductController {
 
     @Operation(summary = "Endpoint publico, Traer Todos los Productos")
     @GetMapping("/public/products")
-    public ResponseEntity<?> getAllProduct(@RequestParam int page) {
+    public ResponseEntity<?> getAllProduct(@RequestParam int page, int limit) {
         try {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getAllProducts(page));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.getAllProducts(page, limit));
         } catch (Exception e) {
 
             e.printStackTrace();

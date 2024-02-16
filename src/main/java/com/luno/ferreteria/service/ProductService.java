@@ -12,7 +12,7 @@ public interface ProductService {
 
      String addProduct(ProductDTO productDto);
 
-     ProductPaginationDTO getAllProducts(int page);
+     ProductPaginationDTO getAllProducts(int page, int limit);
 
      ProductPaginationDTO getProductByQuery(String q, int page);
 

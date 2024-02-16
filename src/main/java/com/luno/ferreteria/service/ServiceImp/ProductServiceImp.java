@@ -51,10 +51,10 @@ public class ProductServiceImp implements ProductService {
 
 
     @Override
-    public ProductPaginationDTO getAllProducts(int page) {
+    public ProductPaginationDTO getAllProducts(int page, int limit) {
 
         // objeto pagina
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, limit);
 
         // crea el listado de productos paginable
         ProductPaginationDTO listProducts = new ProductPaginationDTO();
