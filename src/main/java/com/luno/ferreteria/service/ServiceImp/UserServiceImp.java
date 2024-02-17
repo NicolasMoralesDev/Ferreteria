@@ -31,6 +31,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<User> findUserPro() {
+
+        return  userDao.findUserPro();
+    }
+
+    @Override
     public List<User> findAll(){
         return userDao.findAll();
     }

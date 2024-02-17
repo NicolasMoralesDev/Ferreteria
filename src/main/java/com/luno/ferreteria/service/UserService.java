@@ -10,6 +10,8 @@ public interface UserService {
 
     public User findById(int id);
 
+    public List<User> findUserPro();
+
     public User saveUser(User user);
 
     public List<User> findAll();

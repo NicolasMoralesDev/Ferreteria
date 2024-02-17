@@ -54,7 +54,7 @@ public class CategoryController {
         }
     }
 
-    @Operation(summary = "Enpoint de acesso public, trae  la categoria por id")
+    @Operation(summary = "Enpoint de acesso publico, trae  la categoria por id")
     @GetMapping("/public/get/category/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id){
 
@@ -98,6 +98,34 @@ public class CategoryController {
             if (status == "Sub Categoria creada con Exito!") {
 
                 response.put("msg", "Sub Categoria creada con Exito!" );
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+            } else {
+
+                response.put("error", status );
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+            }
+
+
+        } catch (Exception e){
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @Operation(summary = "Enpoint de acesso privado para administradores, edita una Sub categoria")
+    @PutMapping("/admin/edit/subcategory")
+    public ResponseEntity<?> editSubCategory(@RequestBody SubCategory modify){
+
+        try {
+
+            HashMap<String, String> response = new HashMap<>();
+            String status = cateServ.editSubCategory(modify);
+
+            if (status == "Sub Categoria modificada con Exito!") {
+
+                response.put("msg", "Sub Categoria modificada con Exito!" );
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
 
             } else {

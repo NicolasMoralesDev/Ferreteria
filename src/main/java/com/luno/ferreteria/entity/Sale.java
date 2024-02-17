@@ -38,7 +38,8 @@ public class Sale {
     
     @Enumerated(EnumType.STRING)
     private SaleStatus status;
-
+    @ManyToOne
+    private User userFlete;
 
     @ManyToOne
     private User user;

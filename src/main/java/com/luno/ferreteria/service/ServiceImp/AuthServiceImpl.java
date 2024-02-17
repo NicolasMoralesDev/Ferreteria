@@ -72,6 +72,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Encode password
                 .role(Role.ROLE_USER)
+                .urlImg("https://res.cloudinary.com/dore1xodo/image/upload/v1708147493/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector-modified_gtoub8.png")
                 .build();
         userDao.save(user);
 
@@ -97,6 +98,7 @@ public class AuthServiceImpl implements AuthService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Encode password
+                .urlImg("https://res.cloudinary.com/dore1xodo/image/upload/v1708147493/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector-modified_gtoub8.png")
                 .role(Role.ROLE_PRO)
                 .build();
         userDao.save(user);
@@ -155,6 +157,8 @@ public class AuthServiceImpl implements AuthService {
         extraClaims.put("firstName", user.getFirstName());
         extraClaims.put("lastName", user.getLastName());
         extraClaims.put("role", user.getRole().name());
+        extraClaims.put("urlImg", user.getUrlImg());
+
 
         // Generate token with extra claims
         return jwtService.generateToken(extraClaims, user);

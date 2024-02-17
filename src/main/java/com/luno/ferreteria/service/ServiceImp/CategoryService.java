@@ -27,9 +27,9 @@ public class CategoryService implements ICategoryService {
 
         try {
 
-           cateDao.save(categoria);
+            cateDao.save(categoria);
             return "Categoria Creada con Exito!!";
-        } catch (Exception e){
+        } catch (Exception e) {
 
             return "Error " + e;
         }
@@ -38,7 +38,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public List<Category> getAllcategories() {
 
-            return cateDao.findAll();
+        return cateDao.findAll();
 
 
     }
@@ -46,7 +46,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category getCategorieById(Long id) {
 
-         return   cateDao.findById(id).orElse(null);
+        return cateDao.findById(id).orElse(null);
 
     }
 
@@ -54,13 +54,13 @@ public class CategoryService implements ICategoryService {
     public List<SubCategory> getAllSubCategories() {
 
 
-          return  cateSubDao.findAll();
+        return cateSubDao.findAll();
     }
 
     @Override
     public String createSubCategory(SubCategory nueva) {
 
-        try{
+        try {
 
             if (cateSubDao.getByTitle(nueva.getTitle()) == null) {
 
@@ -73,9 +73,21 @@ public class CategoryService implements ICategoryService {
             }
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
 
-            return "Error "+e;
+            return "Error " + e;
+        }
+    }
+
+    @Override
+    public String editSubCategory(SubCategory modify) {
+
+        try {
+            cateSubDao.save(modify);
+            return "Sub Categoria modificada con Exito!";
+
+        } catch (Exception e) {
+            return "Error " + e.getMessage();
         }
     }
 }

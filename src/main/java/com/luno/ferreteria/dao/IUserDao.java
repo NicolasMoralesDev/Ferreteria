@@ -3,8 +3,11 @@ package com.luno.ferreteria.dao;
 import com.luno.ferreteria.entity.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,4 +27,7 @@ public interface IUserDao extends JpaRepository<User, Integer> {
      * @return boolean, true if the user exists.
      */
     boolean existsByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.role = ROLE_PRO")
+    List<User> findUserPro();
 }
