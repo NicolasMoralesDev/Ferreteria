@@ -8,7 +8,9 @@ import com.luno.ferreteria.dto.SalePaginationDTO;
 import com.luno.ferreteria.dto.UserSalesRequestDTO;
 import com.luno.ferreteria.entity.Sale;
 import com.luno.ferreteria.entity.User;
+import com.luno.ferreteria.entity.UserPro;
 import com.luno.ferreteria.mappers.SaleMapper;
+import com.luno.ferreteria.service.IUserPro;
 import com.luno.ferreteria.service.SaleService;
 import com.luno.ferreteria.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class SaleServiceImp implements SaleService {
 
     @Autowired
     ISaleDao saleDao;
+
+    @Autowired
+    IUserPro userProService;
 
     @Autowired
     UserService userService;
@@ -41,12 +46,14 @@ public class SaleServiceImp implements SaleService {
 
         // Find the user in the database.
         User user = userService.findById(requestDTO.getIdUser());
+        User userFlete = userService.findById(requestDTO.getUserFlete());
 
         // Create the sale mapping the request to a sale entity.
         Sale newSale = saleMapper.saleRequestDtoToSale(requestDTO);
 
         // Set the user to the sale.
         newSale.setUser(user);
+        newSale.setUserFlete(userFlete);
 
         SaleDTO sale = new SaleDTO();
 

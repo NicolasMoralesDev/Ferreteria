@@ -30,4 +30,6 @@ public interface IUserDao extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.role = ROLE_PRO")
     List<User> findUserPro();
+
+
 }

@@ -21,10 +21,11 @@ public class CreateSaleRequestDTO {
 
     private int id;
     private int idUser;
-
+    private int userFlete;
     private List<Item> itemList = new ArrayList<>();
     private String address;
     @Enumerated(EnumType.STRING)
     private SaleStatus status;
     private String phone;
+
 }

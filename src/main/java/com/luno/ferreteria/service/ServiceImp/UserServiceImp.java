@@ -2,9 +2,13 @@ package com.luno.ferreteria.service.ServiceImp;
 
 
 import com.luno.ferreteria.dao.IUserDao;
+import com.luno.ferreteria.dao.IUserProDAO;
 import com.luno.ferreteria.dto.ChangePasswordRequestDTO;
+import com.luno.ferreteria.dto.UserEditDTO;
 import com.luno.ferreteria.entity.User;
+import com.luno.ferreteria.entity.UserPro;
 import com.luno.ferreteria.mappers.UserMapper;
+import com.luno.ferreteria.role.Role;
 import com.luno.ferreteria.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,10 +25,11 @@ public class UserServiceImp implements UserService {
     IUserDao userDao;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    IUserProDAO userProDao;
 
     @Autowired
-    UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
+
     @Override
     public User findById(int id) {
         return userDao.findById(id).get();
@@ -74,6 +79,34 @@ public class UserServiceImp implements UserService {
 
         // Save the user in the database
         userDao.save(user);
+    }
+
+    @Override
+    public String editUser(UserEditDTO user) {
+        try {
+
+            if (user.getRol() == Role.ROLE_PRO) {
+
+                UserPro userPro = userProDao.findUserProByEmail(user.getEmail());
+                userPro.setNombre(user.getFirstName());
+                userPro.setUrlImg(user.getUrlImg());
+                userPro.setEmail(user.getEmail());
+                userPro.setCosto(user.getCosto());
+                userProDao.save(userPro);
+            }
+
+            User userEdit = userDao.findByEmail(user.getEmail()).get();
+            userEdit.setFirstName(user.getFirstName());
+            userEdit.setLastName(user.getLastName());
+            userEdit.setUrlImg(user.getUrlImg());
+            userEdit.setEmail(user.getEmail());
+            userDao.save(userEdit);
+
+            return "Usuario Editado con Exito!";
+
+        } catch (Exception e){
+            return "Error "+ e.getMessage();
+        }
     }
 
 

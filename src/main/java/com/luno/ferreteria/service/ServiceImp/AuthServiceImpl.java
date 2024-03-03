@@ -2,11 +2,13 @@ package com.luno.ferreteria.service.ServiceImp;
 
 import com.luno.ferreteria.config.JwtService;
 import com.luno.ferreteria.dao.IUserDao;
+import com.luno.ferreteria.dao.IUserProDAO;
 import com.luno.ferreteria.dto.AuthenticationResponseDTO;
 import com.luno.ferreteria.dto.LoginRequestDTO;
 import com.luno.ferreteria.dto.RecoverDTO;
 import com.luno.ferreteria.dto.RegisterRequestDTO;
 import com.luno.ferreteria.entity.User;
+import com.luno.ferreteria.entity.UserPro;
 import com.luno.ferreteria.exeptions.UserValidationException;
 import com.luno.ferreteria.role.Role;
 import com.luno.ferreteria.service.AuthService;
@@ -15,6 +17,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +31,7 @@ import java.util.Map;
 public class AuthServiceImpl implements AuthService {
 
     private final IUserDao userDao;
+    private final IUserProDAO userPro;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -64,20 +68,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Validate user data
         validateUser(request);
-
-        // Create user
-        var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())) // Encode password
-                .role(Role.ROLE_USER)
-                .urlImg("https://res.cloudinary.com/dore1xodo/image/upload/v1708147493/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector-modified_gtoub8.png")
-                .build();
-        userDao.save(user);
-
-        // Generate token with extra claims
-        String jwtToken = generateTokenWithExtraClaims(user);
+        String jwtToken = validateRole(request);
 
         // Return the token in a AuthenticationResponse object. This object is converted to JSON and returned to the client.
         return AuthenticationResponseDTO
@@ -86,11 +77,8 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
-    @Override
-    public AuthenticationResponseDTO registerProfessional(RegisterRequestDTO request) {
+    private String validateRole (RegisterRequestDTO request){
 
-        // Validate user data
-        validateUser(request);
 
         // Create user
         var user = User.builder()
@@ -98,20 +86,29 @@ public class AuthServiceImpl implements AuthService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Encode password
+                .role(request.getRole())
                 .urlImg("https://res.cloudinary.com/dore1xodo/image/upload/v1708147493/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector-modified_gtoub8.png")
-                .role(Role.ROLE_PRO)
                 .build();
-        userDao.save(user);
+         userDao.save(user);
 
         // Generate token with extra claims
-        String jwtToken = generateTokenWithExtraClaims(user);
+        String token = generateTokenWithExtraClaims(user);
 
-        // Return the token in a AuthenticationResponse object. This object is converted to JSON and returned to the client.
-        return AuthenticationResponseDTO
-                .builder()
-                .token(jwtToken)
-                .build();
+        if (request.getRole() == Role.ROLE_PRO) {
+
+            UserPro nuevo = new UserPro();
+            User userpro = userDao.findByEmail(request.getEmail()).orElse(null);
+            nuevo.setUser(userpro);
+            nuevo.setNombre(userpro.getFirstName()+" "+ userpro.getLastName());
+            nuevo.setUrlImg(userpro.getUrlImg());
+            nuevo.setEmail(userpro.getEmail());
+            userPro.save(nuevo);
+
+        }
+
+        return token;
     }
+
 
     /**
      * This method validate the user data. If the data is not valid, an

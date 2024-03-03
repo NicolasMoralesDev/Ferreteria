@@ -24,8 +24,6 @@ public interface AuthService {
      */
     AuthenticationResponseDTO register(RegisterRequestDTO request);
 
-    AuthenticationResponseDTO registerProfessional(RegisterRequestDTO request);
-
 
     String recover(RecoverDTO request);
 }
