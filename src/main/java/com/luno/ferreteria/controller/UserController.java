@@ -76,7 +76,6 @@ public class UserController {
        try {
 
            String response = userService.editUser(user);
-
            if (response == "Usuario Editado con Exito!") {
 
                status.put("msg", "usuario editado con Exito!");

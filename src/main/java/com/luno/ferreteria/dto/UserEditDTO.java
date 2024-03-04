@@ -15,10 +15,11 @@ public class UserEditDTO {
 
     private String email;
 
+    @Nullable
     private Double costo;
 
     private String urlImg;
-    @Nullable
+
     private Role rol;
 
 
