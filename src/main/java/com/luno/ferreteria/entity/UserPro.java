@@ -20,8 +20,8 @@ public class UserPro{
     private User user;
     @Nullable
     private Double costo;
-    @Nullable
-    private Double stars;
+    private int stars;
+    private int cantFeedBack;
     @OneToMany
     private List<FeedBack> feedback;
 }

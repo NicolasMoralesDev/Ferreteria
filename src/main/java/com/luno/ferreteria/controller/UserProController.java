@@ -28,7 +28,7 @@ public class UserProController {
 
     @Operation(summary = "Endpoint publico, trae todos los usuarios profeccionales existentes")
     @GetMapping("public/get/userPro")
-    public ResponseEntity<?> getAllUserPro (){
+    public ResponseEntity<?> getAllUserPro(){
         try {
 
             HashMap<String, String> status = new HashMap<>();

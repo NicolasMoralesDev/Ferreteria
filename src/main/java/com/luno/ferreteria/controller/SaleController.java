@@ -1,10 +1,7 @@
 package com.luno.ferreteria.controller;
 
 
-import com.luno.ferreteria.dto.CreateSaleRequestDTO;
-import com.luno.ferreteria.dto.SaleDTO;
-import com.luno.ferreteria.dto.SalePaginationDTO;
-import com.luno.ferreteria.dto.UserSalesRequestDTO;
+import com.luno.ferreteria.dto.*;
 import com.luno.ferreteria.entity.Sale;
 import com.luno.ferreteria.service.ProductService;
 import com.luno.ferreteria.service.SaleService;
@@ -83,11 +80,41 @@ public class SaleController {
         try {
 
             HashMap<String, String> response = new HashMap<>();
+            System.out.println("sale = " + sale);
 
             String status = saleService.putStatusSale(sale);
+
             if (status == "Estado Actualizado correctamente!") {
 
                 response.put("msg",  "Estado Actualizado correctamente!" );
+                return ResponseEntity.ok().body(response);
+
+            } else {
+                response.put("error",  status);
+
+                return ResponseEntity.badRequest().body(response);
+
+            }
+
+
+        } catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @Operation(summary = "Endpoint para agregar valoracion a la venta")
+    @PutMapping("/user/sale/edit")
+    public ResponseEntity<?> putSale(@RequestBody SaleRequestDTO sale) {
+
+        try {
+
+            HashMap<String, String> response = new HashMap<>();
+
+            String status = saleService.putSale(sale);
+
+            if (status == "Reseña dada correctamente!") {
+
+                response.put("msg",  "Reseña dada correctamente!" );
                 return ResponseEntity.ok().body(response);
 
             } else {

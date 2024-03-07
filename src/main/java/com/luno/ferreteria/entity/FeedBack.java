@@ -11,7 +11,7 @@ public class FeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Double star;
+    private int stars;
     private String observation;
     @ManyToOne
     private User usuario;

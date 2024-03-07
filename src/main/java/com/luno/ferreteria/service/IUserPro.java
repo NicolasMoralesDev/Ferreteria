@@ -13,4 +13,6 @@ public interface IUserPro {
 
     public UserPro findByEmail(String email);
 
+    public  void createUserPro(UserPro user);
+
 }

@@ -26,12 +26,17 @@ public class UserProService implements IUserPro {
 
     @Override
     public UserPro findById(long id) {
-
         return userDao.findById(id).orElse(null);
     }
 
     @Override
     public UserPro findByEmail(String email) {
         return userDao.findUserProByEmail(email);
+    }
+
+    @Override
+    public void createUserPro(UserPro user) {
+
+        userDao.save(user);
     }
 }

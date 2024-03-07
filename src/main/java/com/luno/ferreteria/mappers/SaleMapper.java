@@ -2,7 +2,9 @@ package com.luno.ferreteria.mappers;
 
 import com.luno.ferreteria.dao.IProductDao;
 import com.luno.ferreteria.dto.CreateSaleRequestDTO;
+import com.luno.ferreteria.dto.FeedbackDTO;
 import com.luno.ferreteria.dto.SaleDTO;
+import com.luno.ferreteria.dto.SaleRequestDTO;
 import com.luno.ferreteria.entity.Item;
 import com.luno.ferreteria.entity.Sale;
 import com.luno.ferreteria.entity.User;
@@ -30,6 +32,13 @@ public class SaleMapper {
 
         // Create a new SaleDTO
         SaleDTO saleDTO = new SaleDTO();
+        FeedbackDTO feedbackDTO = new FeedbackDTO();
+
+        feedbackDTO.setId(sale.getFeedBack().getId());
+        feedbackDTO.setObservation(sale.getFeedBack().getObservation());
+        feedbackDTO.setUsuario(sale.getFeedBack().getUsuario().getId());
+        feedbackDTO.setStars(sale.getFeedBack().getStars());
+
 
         // Set the attributes of the SaleDTO
         saleDTO.setId(sale.getId());
@@ -38,6 +47,9 @@ public class SaleMapper {
         saleDTO.setPhone(sale.getPhone());
         saleDTO.setStatus(sale.getStatus());
         saleDTO.setDate(sale.getDate());
+        saleDTO.setUserFlete(sale.getUserFlete().getId());
+        saleDTO.setFeedback(feedbackDTO);
+
 
         // If the sale has items, map them to a new list of items
         if (sale.getItemList() != null) {
@@ -71,6 +83,25 @@ public class SaleMapper {
                 i.setProduct(productDao.findById(item.getProduct().getIdProduct()).get());
                 i.setAmount(item.getAmount());
                 sale.getItemList().add(i);
+        }
+        return sale;
+    }
+
+    public Sale salesRequestDtoToSale(SaleRequestDTO saleDto){
+
+
+        Sale sale = new Sale();
+        sale.setId(saleDto.getId());
+        sale.setAddress(saleDto.getAddress());
+        sale.setPhone(saleDto.getPhone());
+        sale.setStatus(saleDto.getStatus());
+        sale.setDate(LocalDate.now());
+        for (Item item : saleDto.getItemList()) {
+            Item i = new Item();
+            i.setSale(sale);
+            i.setProduct(productDao.findById(item.getProduct().getIdProduct()).get());
+            i.setAmount(item.getAmount());
+            sale.getItemList().add(i);
         }
         return sale;
     }

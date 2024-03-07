@@ -2,14 +2,13 @@ package com.luno.ferreteria.service.ServiceImp;
 
 
 import com.luno.ferreteria.dao.ISaleDao;
-import com.luno.ferreteria.dto.CreateSaleRequestDTO;
-import com.luno.ferreteria.dto.SaleDTO;
-import com.luno.ferreteria.dto.SalePaginationDTO;
-import com.luno.ferreteria.dto.UserSalesRequestDTO;
+import com.luno.ferreteria.dto.*;
+import com.luno.ferreteria.entity.FeedBack;
 import com.luno.ferreteria.entity.Sale;
 import com.luno.ferreteria.entity.User;
 import com.luno.ferreteria.entity.UserPro;
 import com.luno.ferreteria.mappers.SaleMapper;
+import com.luno.ferreteria.service.IFeedBackService;
 import com.luno.ferreteria.service.IUserPro;
 import com.luno.ferreteria.service.SaleService;
 import com.luno.ferreteria.service.UserService;
@@ -19,12 +18,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class SaleServiceImp implements SaleService {
 
     @Autowired
     ISaleDao saleDao;
+
+    @Autowired
+    IFeedBackService feedServ;
 
     @Autowired
     IUserPro userProService;
@@ -93,6 +97,7 @@ public class SaleServiceImp implements SaleService {
         // Setting the total pages.
         salePaginationDTO.setTotal(saleList.getTotalPages());
 
+
         // Returning the response.
         return salePaginationDTO;
     }
@@ -134,15 +139,60 @@ public class SaleServiceImp implements SaleService {
         try {
 
             Sale nueva = saleMapper.saleRequestDtoToSale(saleRequestDTO);
-            User nuevo = new User();
-            nuevo.setId(saleRequestDTO.getIdUser());
-            nueva.setUser(nuevo);
-          saleDao.save(nueva);
+            User user = userService.findById(saleRequestDTO.getIdUser());
+
+            FeedBack feedBack = new FeedBack();
+            feedBack.setId(saleRequestDTO.getFeedback().getId());
+            feedBack.setObservation(saleRequestDTO.getFeedback().getObservation());
+            feedBack.setStars(saleRequestDTO.getFeedback().getStars());
+            feedBack.setUsuario(user);
+
+
+            UserPro userPro = userProService.findByEmail(user.getEmail());
+            nueva.setUser(user);
+            nueva.setUserFlete(userPro.getUser());
+            nueva.setFeedBack(feedBack);
+
+            saleDao.save(nueva);
 
             return "Estado Actualizado correctamente!";
         } catch (Exception e) {
 
             return "Error " + e.getMessage();
+        }
+    }
+
+    @Override
+    public String putSale(SaleRequestDTO sale) {
+
+        try {
+
+            Sale nueva = saleMapper.salesRequestDtoToSale(sale);
+            User userFlete = userService.findById(sale.getUserFlete());
+            User nuevo = userService.findById(sale.getIdUser());
+
+            FeedBack feedBack = feedServ.createFeedBack(sale.getFeedback());
+
+            nueva.setUser(nuevo);
+            nueva.setStars(feedBack.getStars());
+            nueva.setFeedBack(feedBack);
+            nueva.setUserFlete(userFlete);
+            nueva.setFeedBack(feedBack);
+            saleDao.save(nueva);
+
+            UserPro userPro = userProService.findByEmail(nuevo.getEmail() );
+
+            List<FeedBack> feedBackList = userPro.getFeedback();
+            userPro.setStars(userPro.getStars() + sale.getFeedback().getStars());
+            userPro.setCantFeedBack(userPro.getCantFeedBack() + 1);
+            feedBackList.add(sale.getFeedback());
+            userPro.setFeedback(feedBackList);
+            userProService.createUserPro(userPro);
+
+        return "Reseña dada correctamente!";
+        } catch (Exception e){
+
+            return "Error "+ e.getMessage();
         }
     }
 
