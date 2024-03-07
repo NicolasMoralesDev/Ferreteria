@@ -2,6 +2,7 @@ package com.luno.ferreteria.service;
 
 
 import com.luno.ferreteria.dto.ChangePasswordRequestDTO;
+import com.luno.ferreteria.dto.UserEditDTO;
 import com.luno.ferreteria.entity.User;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
 public interface UserService {
 
     public User findById(int id);
+
+    public List<User> findUserPro();
 
     public User saveUser(User user);
 
@@ -19,4 +22,6 @@ public interface UserService {
      * @param changePasswordRequest the request with the userId, the current password and the new password.
      */
     public void changePassword(ChangePasswordRequestDTO changePasswordRequest);
+
+    public String editUser(UserEditDTO user);
 }

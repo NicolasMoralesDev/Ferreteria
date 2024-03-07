@@ -4,22 +4,20 @@ import com.luno.ferreteria.entity.Brand;
 import com.luno.ferreteria.entity.SubCategory;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ProductDTO {
+public class UpdatedProductDto {
     private int id;
 
     private String name;
 
     private String description;
 
-    private double price;
+    private int price;
 
-    private String subCategory;
+    private SubCategory subCategory;
 //    private List<SubCategory> subCategory;
 
-    private String brand;
+    private Brand brand;
 
     private String imageUrl;
 

@@ -3,28 +3,35 @@ package com.luno.ferreteria.service;
 
 import com.luno.ferreteria.dto.ProductDTO;
 import com.luno.ferreteria.dto.ProductPaginationDTO;
+import com.luno.ferreteria.entity.SubCategory;
 
 import java.util.List;
 
 
 public interface ProductService {
 
-    public ProductDTO addProduct(ProductDTO productDto);
+     String addProduct(ProductDTO productDto);
 
-    public ProductPaginationDTO getAllProducts(int page);
-    
-    public ProductPaginationDTO getProductByQuery(String q, int page);
+     ProductPaginationDTO getAllProducts(int page, int limit);
 
-    public ProductDTO findById(int id);
+     ProductPaginationDTO getProductByQuery(String q, int page);
 
-    public ProductPaginationDTO findByCategory(String category, int page);
 
-    public void softDeleteProductById(int id);
+     ProductDTO findById(int id);
 
-    public void setStockById(int id,int stock);
-    public void setActiveProductById(int id);
+     void softDeleteProductById(int id);
 
-    public void addBulkProducts(List<ProductDTO> products);
+     void setStockById(int id,int stock);
+     void setActiveProductById(int id);
+
+     void addBulkProducts(List<ProductDTO> products);
 
     ProductDTO updateProduct(ProductDTO updatedProductDto);
+
+
+     String updatePriceProductByBrand(int nuevoPrecio, String brand);
+
+     ProductPaginationDTO findBySubCategory(int subcategory, int page);
+
+    ProductPaginationDTO findByBrand(int brand, int page);
 }

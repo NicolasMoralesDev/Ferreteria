@@ -1,45 +1,48 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.luno.ferreteria.entity;
 
 
-
-import lombok.Getter;
-import lombok.Setter;
-
-
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 
-@Getter
-@Setter
+/**
+ *
+ * @author Nico Morales
+ */
 @Entity
-public class Product {
+@Data
+public class Product  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private int idProduct;
     private String name;
 
-    // Column "TEXT type
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private BigDecimal price;
+    private double price;
 
-    private String category;
-
-    private String brand;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Brand brand;
+    
+    private String medida;
 
     private int stock;
-
-    @Column(name = "img_url")
+    @Column(name = "img_Url")
     private String imageUrl;
-
     private String status;
 
-    public Product(){
+    @ManyToOne(fetch = FetchType.EAGER)
+    private SubCategory subCategory;
+
+    public Product() {
         this.status = "on";
     }
 

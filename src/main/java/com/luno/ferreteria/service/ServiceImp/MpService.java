@@ -33,11 +33,11 @@ public class MpService implements IMpService {
         PreferenceItemRequest itemRequest
                 = PreferenceItemRequest.builder()
                         .id(data.getId())
-                        .title("TecnoCompro")
+                        .title("Corralon Online")
                         .description("Pago de compra")
                         .pictureUrl("http://picture.com/PS5")
-                        .categoryId("Hardward y Equipos informaticos")
-                        .quantity(data.getAmount())
+                        .categoryId("Herramientas e insumos")
+                        .quantity(1)
                         .currencyId("ARS")
                         .unitPrice(data.getPrice())
                         .build();

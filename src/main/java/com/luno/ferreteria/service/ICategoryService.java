@@ -15,5 +15,8 @@ public interface ICategoryService {
 
     Category getCategorieById(Long id);
 
+    List<SubCategory> getAllSubCategories();
     String createSubCategory(SubCategory nueva);
+
+    String editSubCategory(SubCategory modify);
 }

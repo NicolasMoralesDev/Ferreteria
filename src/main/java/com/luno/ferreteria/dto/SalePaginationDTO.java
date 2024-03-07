@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalePaginationDTO {
+
     private List<SaleDTO> sales;
     private int page;
     private int total;

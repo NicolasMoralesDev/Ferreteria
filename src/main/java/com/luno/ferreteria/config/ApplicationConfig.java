@@ -3,7 +3,6 @@ package com.luno.ferreteria.config;
 
 import com.luno.ferreteria.dao.IUserDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    @Autowired
-    private  IUserDao repo;
+
+    private final IUserDao repo;
 
     /**
      * Bean for get the user details from the database. This bean is used by the authentication provider.

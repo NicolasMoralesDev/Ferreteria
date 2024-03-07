@@ -2,6 +2,8 @@ package com.luno.ferreteria.entity;
 
 
 
+
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -34,10 +36,18 @@ public class Sale {
     private String address;
 
     private String phone;
+
+    @Nullable
+    private double stars;
+
+    @Nullable
+    @ManyToOne
+    private FeedBack feedBack;
     
     @Enumerated(EnumType.STRING)
     private SaleStatus status;
-
+    @ManyToOne
+    private User userFlete;
 
     @ManyToOne
     private User user;

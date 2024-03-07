@@ -1,31 +1,40 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.luno.ferreteria.entity;
 
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 
-@Builder
+/**
+ *
+ * @author Nico Morales
+ */
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Category {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int idCategory;
     private String title;
+    @ManyToMany( fetch = FetchType.EAGER)
+    private List<SubCategory> subCategory = new ArrayList<>();
 
+    public Category(int idCategory, String title) {
+        this.idCategory = idCategory;
+        this.title = title;
 
+    }
+
+    public Category() {
+
+    }
 }

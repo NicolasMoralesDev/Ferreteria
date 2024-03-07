@@ -31,6 +31,7 @@ public class AuthController {
         return ResponseEntity.ok(registerResponse);
     }
 
+
     /**
      * Endpoint for login a user in the system.
      * @param request LoginRequest, contains the user data.

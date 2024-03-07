@@ -11,6 +11,6 @@ import com.luno.ferreteria.dto.MercadoPagoDTO;
 public interface IMpService {
     
     
-    public String OrderMp(MercadoPagoDTO request);
+     String OrderMp(MercadoPagoDTO request);
     
 }

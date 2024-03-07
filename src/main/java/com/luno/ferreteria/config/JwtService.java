@@ -69,14 +69,15 @@ public class JwtService {
             Map<String, Object> extraClaims, // Claims to be added to the token.
             UserDetails userDetails // User details of the user that is trying to be authenticated.
     ){
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
-                .signWith(getSignInKey())
-                .compact();
+        return
+                Jwts
+                        .builder()
+                        .setClaims(extraClaims)
+                        .setSubject(userDetails.getUsername())
+                        .setIssuedAt(new java.util.Date(System.currentTimeMillis()))
+                        .setExpiration(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
+                        .signWith(getSignInKey())
+                        .compact();
 
     }
 

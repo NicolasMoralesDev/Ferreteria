@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,20 +27,18 @@ public class CategoryService implements ICategoryService {
 
         try {
 
-            Category nueva = Category.builder().title(categoria.getTitle()).build();
-            nueva.setTitle("epico");
-            cateDao.save(nueva);
+            cateDao.save(categoria);
             return "Categoria Creada con Exito!!";
-        } catch (Exception e){
+        } catch (Exception e) {
 
-            return "Error" + e;
+            return "Error " + e;
         }
     }
 
     @Override
     public List<Category> getAllcategories() {
 
-            return cateDao.findAll();
+        return cateDao.findAll();
 
 
     }
@@ -47,22 +46,48 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category getCategorieById(Long id) {
 
-         return   cateDao.findById(id).orElse(null);
+        return cateDao.findById(id).orElse(null);
 
+    }
+
+    @Override
+    public List<SubCategory> getAllSubCategories() {
+
+
+        return cateSubDao.findAll();
     }
 
     @Override
     public String createSubCategory(SubCategory nueva) {
 
-        try{
+        try {
 
-            cateSubDao.save(nueva);
+            if (cateSubDao.getByTitle(nueva.getTitle()) == null) {
 
-            return "SubCategoria creada con Exito!!";
+                cateSubDao.save(nueva);
 
-        } catch (Exception e){
+                return "Sub Categoria creada con Exito!";
 
-            return "Error"+e;
+            } else {
+                return "La sub categoria, ya existe!";
+            }
+
+
+        } catch (Exception e) {
+
+            return "Error " + e;
+        }
+    }
+
+    @Override
+    public String editSubCategory(SubCategory modify) {
+
+        try {
+            cateSubDao.save(modify);
+            return "Sub Categoria modificada con Exito!";
+
+        } catch (Exception e) {
+            return "Error " + e.getMessage();
         }
     }
 }

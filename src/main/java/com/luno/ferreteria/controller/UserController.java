@@ -2,6 +2,7 @@ package com.luno.ferreteria.controller;
 
 import com.luno.ferreteria.dto.ChangePasswordRequestDTO;
 import com.luno.ferreteria.dto.UserDTO;
+import com.luno.ferreteria.dto.UserEditDTO;
 import com.luno.ferreteria.mappers.UserMapper;
 import com.luno.ferreteria.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -64,5 +66,31 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @Operation(summary = "Endpoint privado, edita el usuario")
+    @PutMapping("/user/edit")
+    public  ResponseEntity<?> editUser (@RequestBody UserEditDTO user){
+
+        HashMap<String, String> status = new HashMap<>();
+       try {
+
+           String response = userService.editUser(user);
+           if (response == "Usuario Editado con Exito!") {
+
+               status.put("msg", "usuario editado con Exito!");
+               return  ResponseEntity.ok().body(status);
+
+           } else {
+               status.put("error", "se ha produccido un problema!");
+               return ResponseEntity.badRequest().body(status);
+           }
+
+       } catch (Exception e){
+
+           status.put("error", e.getMessage());
+           return ResponseEntity.badRequest().body(status);
+        }
+
     }
 }
