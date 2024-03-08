@@ -5,37 +5,37 @@ services:
   backend:
     container_name: backend # Nombre del contenedor
     build: . # Ubicación del archivo Dockerfile
-    ports: 
+    ports:
       - "8080:8080"
-    networks: 
+    networks:
       - appCorralon
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/corralon?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: nico
       SPRING_DATASOURCE_PASSWORD: 123
     depends_on: # "backend" inicia despues que se termine de cargar el servicio "db"
-      - db:
-          container_name: db # Nombre del contenedor
-          image: mysql:8.0.33 # Imagen de la base de datos, en este caso se usa MySQL
-          ports: # Puertos que se exponen
-            - "3306:3306"
-          volumes:
-            - mysql-data:/var/lib/mysql
-
-          environment:
-            - 'MYSQL_DATABASE=corralon'
-            - 'MYSQL_PASSWORD=123'
-            - 'MYSQL_USER=nico'
-            - 'MYSQL_ROOT_PASSWORD=123'
-          networks: # Red de Docker por la que se comunicará con otros contenedores
-            - appCorralon
-          restart: unless-stopped
-        volumes:
-          mysql-data:
-            external: false
+      - db
 
   # Servicio 'db', contiene las configuraciones para la base de datos
+  db:
+    container_name: db # Nombre del contenedor
+    image: mysql:8.0.33 # Imagen de la base de datos, en este caso se usa MySQL
+    ports: # Puertos que se exponen
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
 
+    environment:
+      - 'MYSQL_DATABASE=corralon'
+      - 'MYSQL_PASSWORD=123'
+      - 'MYSQL_USER=nico'
+      - 'MYSQL_ROOT_PASSWORD=123'
+    networks:  # Red de Docker por la que se comunicará con otros contenedores
+      - appCorralon
+    restart: unless-stopped
+volumes:
+  mysql-data:
+    external: false
 
 networks: # Configuración de la red de docker
   appCorralon:
