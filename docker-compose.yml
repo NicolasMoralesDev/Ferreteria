@@ -11,7 +11,7 @@ services:
       - appCorralon
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/corralon?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_USERNAME: nico
       SPRING_DATASOURCE_PASSWORD: 123
    # depends_on: # "backend" inicia despues que se termine de cargar el servicio "db"
     #  - db
