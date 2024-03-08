@@ -21,7 +21,7 @@ services:
     container_name: db # Nombre del contenedor
     image: mysql:8.0.33 # Imagen de la base de datos, en este caso se usa MySQL
     ports: # Puertos que se exponen
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
 
