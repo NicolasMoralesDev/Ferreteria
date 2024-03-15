@@ -13,6 +13,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/corralon?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: nico
       SPRING_DATASOURCE_PASSWORD: 123
+    volumes:
+      - app-data:/var/lib/mysql
     depends_on: # "backend" inicia despues que se termine de cargar el servicio "db"
        db:
            condition: service_healthy
@@ -43,6 +45,8 @@ services:
     restart: unless-stopped
 volumes:
   mysql-data:
+    external: false
+  app-data:
     external: false
 
 networks: # Configuración de la red de docker
